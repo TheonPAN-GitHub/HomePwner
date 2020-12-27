@@ -38,20 +38,10 @@ class ItemStore{
         } catch{
             print("Couldn't load data from: \(itemArchiveURL.path)")
         }
-        for _ in 0..<5{
-            createItem()
-        }
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
-        if let url = URL(string: "http://127.0.0.1:8080/item") {
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            let task = session.dataTask(with: request, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
-
-        }
+//        for _ in 0..<5{
+//            createItem()
+//        }
         
-        
-        encoder.dateEncodingStrategy = .formatted(.dateFormatter)
-        decoder.dateDecodingStrategy = .formatted(.dateFormatter)
     } 
     
     @discardableResult func createItem()->Item{

@@ -9,25 +9,21 @@
 import UIKit
 
 class ItemsViewController : UITableViewController {
+    //MARK: - Properties
     var itemStore : ItemStore!
     var windowScene : UIWindowScene!
     var itemsGroupByValueInDollars : [ItemGroup]!
     let DEFAULT_GROUP_NAME : String = "Unknown Group Name"
     var imageStore : ImageStore!
+    var itemRequest = ResourceRequest<Item>(resourcePath: "items")
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         navigationItem.leftBarButtonItem = editButtonItem
+        itemsGroupByValueInDollars = [ItemGroup]()
     }
     
-    @IBAction func addNewItem(_ sender:UIBarButtonItem){
-        let newItem = itemStore.createItem()
-        itemsGroupByValueInDollars = itemStore.itemsGroupByValueInDollars()
-        if let indexPath = self.getIndexPathOfItem(item: newItem){
-            self.tableView.insertRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
 //        super.viewDidLoad()
 //        if let statusBarHeight = windowScene.statusBarManager?.statusBarFrame.height{
@@ -35,10 +31,84 @@ class ItemsViewController : UITableViewController {
 //            tableView.contentInset = insets
 //            tableView.scrollIndicatorInsets = insets
 //        }
-        itemsGroupByValueInDollars = itemStore.itemsGroupByValueInDollars()
+//        itemsGroupByValueInDollars = itemStore.itemsGroupByValueInDollars()
         tableView.estimatedRowHeight = 65
     }
     
+    override func viewWillAppear(_ animated:Bool){
+        super.viewWillAppear(animated)
+        self.refresh(nil)
+    }
+    
+    //MARK: -Segues
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showItem"?:
+            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+                if let item = itemsGroupByValueInDollars[indexPathForSelectedRow.section].items?[indexPathForSelectedRow.row]{
+                    let detailViewController = segue.destination as! DetailViewController
+                    detailViewController.item = item
+                    detailViewController.imageStore = imageStore
+                    detailViewController.windowScene = windowScene
+                }
+            }
+        default:
+//            preconditionFailure("Unexpected segue identifier")
+            return
+        }
+    }
+    
+    //MARK: -Private methods
+    private func getItemsGroupByValueInDollars(items:[Item])->[ItemGroup]!{
+        var itemsGroupBy = [ItemGroup]()
+        let itemGroupLessThenFifty = ItemGroup(groupName:"Less than $50",
+                                               items:items.filter(){$0.valueInDollars <= 50})
+        let itemGroupMoreThenFifty = ItemGroup(groupName:"More than $50",
+                                               items:items.filter(){$0.valueInDollars > 50})
+        
+        itemsGroupBy.append(itemGroupLessThenFifty)
+        itemsGroupBy.append(itemGroupMoreThenFifty)
+        
+        return itemsGroupBy
+    }
+    
+    
+//    private func getIndexPathOfItem(itemsGroup:[ItemGroup], item : Item)->IndexPath?{
+//        for i in 0...itemsGroup.count - 1{
+//            if let index = itemsGroup[i].items?.firstIndex(of: item){
+//                let indexPath = IndexPath(row: index, section: i)
+//                return indexPath
+//            }else{
+//                continue
+//            }
+//        }
+//        return nil
+//    }
+//    
+    // MARK: -IBActions
+    @IBAction func refresh(_ sender:UIRefreshControl?){
+        itemRequest.getAll(){ [weak self] itemsResult in
+            DispatchQueue.main.async {
+                sender?.endRefreshing()
+            }
+            
+            switch itemsResult {
+            case .failure:
+                let message = "There are some issues when getting all items."
+                ErrorPresenter.showError(message: message, on: self)
+            case.success(let items):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else {return}
+                    self.itemsGroupByValueInDollars = self.getItemsGroupByValueInDollars(items: items)
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+}
+
+//MARK: - UITableViewDataSource
+extension ItemsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let numberOfRows = itemsGroupByValueInDollars[section].items?.count{
             return numberOfRows
@@ -104,44 +174,5 @@ class ItemsViewController : UITableViewController {
         if sourceIndexPath.section != destinationIndexPath.section {
             return
         }
-        
-        
-    }
-    
-    private func getIndexPathOfItem(item : Item)->IndexPath?{
-        if let itemsGroupByValueInDollars = itemStore.itemsGroupByValueInDollars(){
-            for i in 0...itemsGroupByValueInDollars.count - 1{
-                if let index = itemsGroupByValueInDollars[i].items?.firstIndex(of: item){
-                    let indexPath = IndexPath(row: index, section: i)
-                    return indexPath
-                }else{
-                    continue
-                }
-            }
-        }
-        return nil
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "showItem"?:
-            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-                if let item = itemsGroupByValueInDollars[indexPathForSelectedRow.section].items?[indexPathForSelectedRow.row]{
-                    let detailViewController = segue.destination as! DetailViewController
-                    detailViewController.item = item
-                    detailViewController.imageStore = imageStore
-                    detailViewController.windowScene = windowScene
-                }
-            }
-        default:
-            preconditionFailure("Unexpected segue identifier")
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        itemsGroupByValueInDollars = itemStore.itemsGroupByValueInDollars()
-        tableView.reloadData()
     }
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ztC-Fo-7gu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ztC-Fo-7gu">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,7 +16,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="BRe-xj-9Uw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="65" id="rNb-eE-tm0" customClass="ItemCell" customModule="Homepwner" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="65"/>
@@ -38,7 +40,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="191-FF-gmX">
                                             <rect key="frame" x="9" y="31.5" width="31" height="22.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                            <color key="textColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" systemColor="opaqueSeparatorColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -69,10 +71,16 @@
                     <navigationItem key="navigationItem" title="Homepwner" id="8rU-qd-vzo">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1FI-AA-fwD">
                             <connections>
-                                <action selector="addNewItem:" destination="zgh-mG-ipm" id="bWb-M1-Zch"/>
+                                <segue destination="bgZ-NP-EtJ" kind="show" id="caA-xz-saW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="h3V-N5-XW7">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refresh:" destination="zgh-mG-ipm" eventType="valueChanged" id="OoW-iB-Otj"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MjP-p8-2Bz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -147,11 +155,11 @@
                                         <rect key="frame" x="0.0" y="130.5" width="394" height="617.5"/>
                                     </imageView>
                                 </subviews>
+                                <viewLayoutGuide key="safeArea" id="CAM-B3-lAh"/>
                                 <constraints>
                                     <constraint firstItem="r9F-7U-vvn" firstAttribute="leading" secondItem="9JZ-59-fQy" secondAttribute="leading" id="IYT-xG-KJR"/>
                                     <constraint firstItem="9Qt-5C-dhe" firstAttribute="leading" secondItem="r9F-7U-vvn" secondAttribute="leading" id="o3q-O9-NpB"/>
                                 </constraints>
-                                <viewLayoutGuide key="safeArea" id="CAM-B3-lAh"/>
                             </stackView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vtb-JQ-Zmj">
                                 <rect key="frame" x="0.0" y="852" width="414" height="44"/>
@@ -167,7 +175,8 @@
                                 </items>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="c7F-Bd-Q8S"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="BLX-SS-pNV" secondAttribute="trailing" constant="10" id="Iok-gD-Lsh"/>
@@ -178,12 +187,23 @@
                             <constraint firstItem="BLX-SS-pNV" firstAttribute="top" secondItem="c7F-Bd-Q8S" secondAttribute="top" constant="8" id="XY9-9L-VaS"/>
                             <constraint firstAttribute="trailing" secondItem="Vtb-JQ-Zmj" secondAttribute="trailing" id="giL-Oe-jPs"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="c7F-Bd-Q8S"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="f1u-a5-Jnb" appends="YES" id="aBB-9l-0lb"/>
                         </connections>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="qjW-Hg-3rh">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="j2l-Ue-L7L">
+                            <connections>
+                                <action selector="cancel:" destination="bgZ-NP-EtJ" id="rn3-cV-JR8"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="v3h-m0-92Y">
+                            <connections>
+                                <action selector="save:" destination="bgZ-NP-EtJ" id="6J4-23-XF4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dateLabel" destination="KDx-X0-NmW" id="RhS-mf-OGO"/>
@@ -221,4 +241,15 @@
             <point key="canvasLocation" x="134.78260869565219" y="134.59821428571428"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="caA-xz-saW"/>
+    </inferredMetricsTieBreakers>
+    <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

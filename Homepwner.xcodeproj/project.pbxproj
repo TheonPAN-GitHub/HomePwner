@@ -22,6 +22,9 @@
 		1768061F252EE01300B427CF /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768061E252EE01300B427CF /* ItemCell.swift */; };
 		17680621253B297100B427CF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17680620253B297100B427CF /* DetailViewController.swift */; };
 		17C84519255AEC4A00225691 /* RESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C84518255AEC4900225691 /* RESTClient.swift */; };
+		C440CE6B2593216A000D1B6B /* ErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C440CE6A2593216A000D1B6B /* ErrorPresenter.swift */; };
+		C46DA3372588FD9C000864B9 /* ResourceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46DA3362588FD9C000864B9 /* ResourceRequest.swift */; };
+		C46DA33C25890380000864B9 /* ResourceRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46DA33B25890380000864B9 /* ResourceRequestError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		1768061E252EE01300B427CF /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		17680620253B297100B427CF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		17C84518255AEC4900225691 /* RESTClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTClient.swift; sourceTree = "<group>"; };
+		C440CE6A2593216A000D1B6B /* ErrorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresenter.swift; sourceTree = "<group>"; };
+		C46DA3362588FD9C000864B9 /* ResourceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRequest.swift; sourceTree = "<group>"; };
+		C46DA33B25890380000864B9 /* ResourceRequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRequestError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 		172729AF252C5D620061F1F9 /* Homepwner */ = {
 			isa = PBXGroup;
 			children = (
+				C48FD23725879FFC006C8C92 /* Utilities */,
 				1761A5842549136300E104A5 /* ImageStore.swift */,
 				172729E2252C602E0061F1F9 /* Item.swift */,
 				172729E0252C5EA10061F1F9 /* ItemsViewController.swift */,
@@ -147,6 +154,16 @@
 				172729D4252C5D630061F1F9 /* Info.plist */,
 			);
 			path = HomepwnerUITests;
+			sourceTree = "<group>";
+		};
+		C48FD23725879FFC006C8C92 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C46DA3362588FD9C000864B9 /* ResourceRequest.swift */,
+				C46DA33B25890380000864B9 /* ResourceRequestError.swift */,
+				C440CE6A2593216A000D1B6B /* ErrorPresenter.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,7 +229,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Pan Qingrong";
 				TargetAttributes = {
 					172729AC252C5D620061F1F9 = {
@@ -282,7 +299,10 @@
 			files = (
 				172729E3252C602E0061F1F9 /* Item.swift in Sources */,
 				172729E1252C5EA10061F1F9 /* ItemsViewController.swift in Sources */,
+				C440CE6B2593216A000D1B6B /* ErrorPresenter.swift in Sources */,
+				C46DA3372588FD9C000864B9 /* ResourceRequest.swift in Sources */,
 				174FA315252D7CE600B121E4 /* ItemGroup.swift in Sources */,
+				C46DA33C25890380000864B9 /* ResourceRequestError.swift in Sources */,
 				172729B1252C5D620061F1F9 /* AppDelegate.swift in Sources */,
 				1768061F252EE01300B427CF /* ItemCell.swift in Sources */,
 				1761A5852549136300E104A5 /* ImageStore.swift in Sources */,
@@ -370,6 +390,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -430,6 +451,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

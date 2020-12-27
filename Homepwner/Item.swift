@@ -8,12 +8,13 @@
 
 import UIKit
 
-class Item : NSObject, NSCoding, Codable{
+class Item : Codable{
+    var id:UUID?
     var name : String
     var valueInDollars : Int
     var serialNumber : String?
     var itemKey : String
-    let dateCreated : Date
+    var dateCreated : Date
     
 //    enum CodingKeys:CodingKey{
 //        typealias RawValue = String
@@ -27,7 +28,6 @@ class Item : NSObject, NSCoding, Codable{
         self.serialNumber = serialNumber
         self.dateCreated = Date()
         self.itemKey = UUID().uuidString
-        super.init()
     }
 
     convenience init(random:Bool = false){
@@ -47,21 +47,21 @@ class Item : NSObject, NSCoding, Codable{
         }
     }
 
-    required init?(coder: NSCoder) {
-        name = coder.decodeObject(forKey: "name") as! String
-        valueInDollars = coder.decodeInteger(forKey: "valueInDollars")
-        itemKey = coder.decodeObject(forKey: "itemKey") as! String
-        dateCreated = coder.decodeObject(forKey: "dateCreated") as! Date
-        serialNumber = coder.decodeObject(forKey: "serialNumber") as! String?
-        super.init()
-    }
-
-    func encode(with coder: NSCoder) {
-        coder.encode(name, forKey: "name")
-        coder.encode(serialNumber, forKey: "serialNumber")
-        coder.encode(dateCreated, forKey: "dateCreated")
-        coder.encode(itemKey, forKey: "itemKey")
-        coder.encode(valueInDollars, forKey: "valueInDollars")
-    }
+//    required init?(coder: NSCoder) {
+//        name = coder.decodeObject(forKey: "name") as! String
+//        valueInDollars = coder.decodeInteger(forKey: "valueInDollars")
+//        itemKey = coder.decodeObject(forKey: "itemKey") as! String
+//        dateCreated = coder.decodeObject(forKey: "dateCreated") as! Date
+//        serialNumber = coder.decodeObject(forKey: "serialNumber") as! String?
+//        super.init()
+//    }
+//
+//    func encode(with coder: NSCoder) {
+//        coder.encode(name, forKey: "name")
+//        coder.encode(serialNumber, forKey: "serialNumber")
+//        coder.encode(dateCreated, forKey: "dateCreated")
+//        coder.encode(itemKey, forKey: "itemKey")
+//        coder.encode(valueInDollars, forKey: "valueInDollars")
+//    }
 }
 

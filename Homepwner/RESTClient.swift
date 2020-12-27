@@ -22,7 +22,6 @@ protocol RESTClient : AnyObject{
     
     func load(withCompetion completion : @escaping (ModelType?) -> Void)
     
-    func 
     
     
     
