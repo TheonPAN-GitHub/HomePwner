@@ -42,7 +42,9 @@ struct ResourceRequest<ResourceType> where ResourceType :Codable {
                 }
                 
                 do {
-                    let resource = try JSONDecoder().decode(ResourceType.self, from: jsonData)
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    let resource = try decoder.decode(ResourceType.self, from: jsonData)
                     completion(.success(resource))
                 }catch{
                     completion(.failure(.decodingError))
@@ -63,7 +65,7 @@ struct ResourceRequest<ResourceType> where ResourceType :Codable {
             urlRequest.httpMethod = "PUT"
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .secondsSince1970
+            encoder.dateEncodingStrategy = .iso8601
             urlRequest.httpBody = try encoder.encode(updateDate)
             
             let dataTask = URLSession.shared.dataTask(with: urlRequest){
@@ -76,7 +78,9 @@ struct ResourceRequest<ResourceType> where ResourceType :Codable {
                     return
                 }
                 do {
-                    let resource = try JSONDecoder().decode(ResourceType.self, from: jsonData)
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    let resource = try decoder.decode(ResourceType.self, from: jsonData)
                     completion(.success(resource))
                 }catch{
                     completion(.failure(.decodingError))
@@ -98,6 +102,7 @@ struct ResourceRequest<ResourceType> where ResourceType :Codable {
             do {
                 print(String(decoding:jsonData, as: UTF8.self))
                 let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
                 let resources = try decoder.decode([ResourceType].self, from: jsonData)
                 completion(.success(resources))
             } catch {

@@ -67,7 +67,7 @@ class DetailViewController : UIViewController, UINavigationControllerDelegate{
             valueField.text = numberFormatter.string(from: NSNumber(value : item!.valueInDollars))
             dateLabel.text = dateFormatter.string(from: item!.dateCreated)
             
-            let key = item!.itemKey
+            let key = item!.itemKey ?? ""
             let imageToDisplay = imageStore.image(forKey: key)
             
             imageView.image = imageToDisplay
@@ -113,12 +113,12 @@ class DetailViewController : UIViewController, UINavigationControllerDelegate{
             item = Item(name: name, serialNumber: serialNumberField.text, valueInDollars: value.intValue)
         }else{
             if let item = self.item{
-                item.name = self.item!.name
-                item.valueInDollars = self.item!.valueInDollars
-                item.serialNumber = self.item!.serialNumber
+                item.name = name
+                item.valueInDollars = value.intValue
+                item.serialNumber = serialNumberField.text
             }
         }
-        return item
+        return self.item
     }
     
     // MARK: -IBActions
@@ -168,7 +168,7 @@ extension DetailViewController : UIImagePickerControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         imageView.image = image
-        imageStore.setImage(image, forKey: item!.itemKey)
+        imageStore.setImage(image, forKey: item!.itemKey ?? "")
         dismiss(animated: true, completion: nil)
     }
 }

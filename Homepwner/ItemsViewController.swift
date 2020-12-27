@@ -157,7 +157,7 @@ extension ItemsViewController {
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {(action)->Void in
                     self.itemStore.removeItem(item)
                     self.itemsGroupByValueInDollars = self.itemStore.itemsGroupByValueInDollars()
-                    self.imageStore.deleteImage(forKey: item.itemKey)
+                    self.imageStore.deleteImage(forKey: item.itemKey ?? "")
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 })
                 ac.addAction(deleteAction)

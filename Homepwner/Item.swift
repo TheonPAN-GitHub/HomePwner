@@ -13,7 +13,7 @@ class Item : Codable{
     var name : String
     var valueInDollars : Int
     var serialNumber : String?
-    var itemKey : String
+    var itemKey : String?
     var dateCreated : Date
     
 //    enum CodingKeys:CodingKey{
