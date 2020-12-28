@@ -108,17 +108,16 @@ class DetailViewController : UIViewController, UINavigationControllerDelegate{
 //            ErrorPresenter.showError(message: "The created date of the item should be specified.", on: self)
 //            return nil
 //        }
-        var item : Item?
+        var item : Item
         if isNewItem {
             item = Item(name: name, serialNumber: serialNumberField.text, valueInDollars: value.intValue)
         }else{
-            if let item = self.item{
-                item.name = name
-                item.valueInDollars = value.intValue
-                item.serialNumber = serialNumberField.text
-            }
+            item = self.item!
+            item.name = name
+            item.valueInDollars = value.intValue
+            item.serialNumber = serialNumberField.text
         }
-        return self.item
+        return item
     }
     
     // MARK: -IBActions
@@ -141,7 +140,8 @@ class DetailViewController : UIViewController, UINavigationControllerDelegate{
                     }
                 }
             }else{
-                itemRequest.update(item){ [weak self] result in
+                let itemWithIDRequest = ResourceRequest<Item>(resourcePath: "items/\(self.item!.id!.uuidString)")
+                itemWithIDRequest.update(item){ [weak self] result in
                     switch result {
                     case .failure:
                         let errmsg = "There are some errors when saving data."
